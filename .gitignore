@@ -61,3 +61,4 @@ buck-out/
 #files
 env.js
 yarn.lock
+my-key.keystore

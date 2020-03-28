@@ -45,12 +45,14 @@ const TopArticles = ({articles, goToArticle}) => {
             key={index.toString()}
             onPress={() => goToArticle(article)}>
             <View style={styles.container}>
-              <Image
-                style={styles.img}
-                source={{
-                  uri: article.fields.thumbnail,
-                }}
-              />
+              {article.fields ? (
+                <Image
+                  style={styles.img}
+                  source={{
+                    uri: article.fields.thumbnail,
+                  }}
+                />
+              ) : null}
               <View style={styles.title}>
                 <Text style={styles.heading}>{article.webTitle}</Text>
                 <View style={styles.block}>

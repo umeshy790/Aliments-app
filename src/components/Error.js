@@ -6,7 +6,7 @@ const Error = ({message, refetch}) => {
     <View style={styles.container}>
       <Text style={styles.txt}>{message}</Text>
       <TouchableOpacity style={styles.btn} onPress={() => refetch()}>
-        <Text style={styles.btnText}>Retry !</Text>
+        <Text style={styles.btnText}>Retry</Text>
       </TouchableOpacity>
     </View>
   );

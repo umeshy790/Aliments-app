@@ -1,12 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
   FlatList,
   ActivityIndicator,
-  TouchableOpacity,
-  Text,
   DrawerLayoutAndroid,
 } from 'react-native';
 import {useQuery} from '@apollo/react-hooks';
@@ -14,6 +12,8 @@ import {gql} from 'apollo-boost';
 import Article from './views/Article';
 import TopArticles from './views/TopArticles';
 import Error from './components/Error';
+import Drawer from './components/Drawer';
+import {getPage, setPage} from './utils/properties';
 
 const ARTICLES = gql`
   query getResponse($page: Int!) {
@@ -33,11 +33,13 @@ const ARTICLES = gql`
 `;
 
 const Root = ({navigation}) => {
-  let [page, setState] = useState(1);
-  const {error, data, fetchMore, networkStatus, refetch} = useQuery(ARTICLES, {
-    variables: {page},
-    notifyOnNetworkStatusChange: true,
-  });
+  const {error, data, fetchMore, variables, networkStatus, refetch} = useQuery(
+    ARTICLES,
+    {
+      variables: {page: 1},
+      notifyOnNetworkStatusChange: true,
+    },
+  );
 
   function handleGoToArticle(result) {
     navigation.navigate('DetailedArticle', {
@@ -49,35 +51,26 @@ const Root = ({navigation}) => {
     });
   }
 
-  useEffect(() => {
-    fetchMoreResults();
-  }, [fetchMoreResults]);
+  function handleOnReachedEnd(_) {
+    setPage();
+    fetchMore({
+      variables: {page: getPage()},
+      updateQuery: (prev, {fetchMoreResult}) => {
+        if (!fetchMoreResult) {
+          return prev;
+        }
 
-  const fetchMoreResults = useCallback(() => {
-    if (page !== 1) {
-      fetchMore({
-        variables: {page},
-        updateQuery: (prev, {fetchMoreResult}) => {
-          console.log(fetchMoreResult);
-          if (!fetchMoreResult) {
-            return prev;
-          }
-          return Object.assign({}, prev, {
-            response: {
-              ...prev.response,
-              results: [
-                ...prev.response.results,
-                ...fetchMoreResult.response.results,
-              ],
-            },
-          });
-        },
-      });
-    }
-  }, [fetchMore, page]);
-
-  function handleLoadMore() {
-    // setState(++page);
+        return Object.assign({}, prev, {
+          response: {
+            ...prev.response,
+            results: [
+              ...prev.response.results,
+              ...fetchMoreResult.response.results,
+            ],
+          },
+        });
+      },
+    });
   }
 
   async function handleRefech() {
@@ -88,7 +81,10 @@ const Root = ({navigation}) => {
 
   if (error) {
     return (
-      <Error message={error.message.split(':')[1]} refetch={handleRefech} />
+      <Error
+        message={error.message.split(':')[1]}
+        refetch={() => handleRefech()}
+      />
     );
   }
 
@@ -96,7 +92,7 @@ const Root = ({navigation}) => {
     <DrawerLayoutAndroid
       drawerWidth={300}
       drawerPosition={'left'}
-      renderNavigationView={() => null}>
+      renderNavigationView={() => <Drawer />}>
       <View style={styles.container}>
         {networkStatus === 1 || networkStatus === 4 ? (
           <View
@@ -115,20 +111,17 @@ const Root = ({navigation}) => {
                   5,
                   data.response.results.length,
                 )}
+                onEndReachedThreshold={0.8}
+                onEndReached={handleOnReachedEnd}
                 renderItem={({item}) => (
                   <Article
                     result={item}
                     goToArticle={() => handleGoToArticle(item)}
                   />
                 )}
-                keyExtractor={(item, index) => `${index}_${item.id}`}
+                keyExtractor={(_, index) => String(index)}
                 showsVerticalScrollIndicator={false}
               />
-              {/* <TouchableOpacity
-                onPress={handleLoadMore}
-                style={{height: 40, width: 100}}>
-                <Text>Load More</Text>
-              </TouchableOpacity> */}
             </View>
           </View>
         )}
