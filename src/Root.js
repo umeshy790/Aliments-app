@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   View,
   StyleSheet,
@@ -13,11 +13,11 @@ import Article from './views/Article';
 import TopArticles from './views/TopArticles';
 import Error from './components/Error';
 import Drawer from './components/Drawer';
-import {getPage, setPage} from './utils/properties';
+import {getPage, setPage, resetPage} from './utils/properties';
 
 const ARTICLES = gql`
-  query getResponse($page: Int!) {
-    response(page: $page) {
+  query getResponse($page: Int!, $search: String) {
+    response(page: $page, search: $search) {
       total
       results {
         webTitle
@@ -33,13 +33,12 @@ const ARTICLES = gql`
 `;
 
 const Root = ({navigation}) => {
-  const {error, data, fetchMore, variables, networkStatus, refetch} = useQuery(
-    ARTICLES,
-    {
-      variables: {page: 1},
-      notifyOnNetworkStatusChange: true,
-    },
-  );
+  const {error, data, fetchMore, networkStatus, refetch} = useQuery(ARTICLES, {
+    variables: {page: 1, search: null},
+    notifyOnNetworkStatusChange: true,
+  });
+
+  let ref = useRef(null);
 
   function handleGoToArticle(result) {
     navigation.navigate('DetailedArticle', {
@@ -49,6 +48,16 @@ const Root = ({navigation}) => {
       webPublicationDate: result.webPublicationDate,
       sectionName: result.sectionName,
     });
+  }
+
+  function handleSearch(value) {
+    try {
+      resetPage();
+      refetch({page: 1, search: value});
+      ref.current.closeDrawer();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function handleOnReachedEnd(_) {
@@ -90,11 +99,12 @@ const Root = ({navigation}) => {
 
   return (
     <DrawerLayoutAndroid
+      ref={ref}
       drawerWidth={300}
       drawerPosition={'left'}
-      renderNavigationView={() => <Drawer />}>
+      renderNavigationView={() => <Drawer search={handleSearch} />}>
       <View style={styles.container}>
-        {networkStatus === 1 || networkStatus === 4 ? (
+        {networkStatus === 1 || networkStatus === 2 || networkStatus === 4 ? (
           <View
             style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <ActivityIndicator size="large" color="#0086da" />

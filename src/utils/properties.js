@@ -7,3 +7,7 @@ export function setPage() {
 export function getPage() {
   return PAGE;
 }
+
+export function resetPage() {
+  PAGE = 1;
+}
