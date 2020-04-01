@@ -75,7 +75,7 @@ const DetailedArticle = ({route, _}) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    paddingVertical: 10,
+                    paddingVertical: 16,
                   }}>
                   <Text style={styles.title}>{sectionName.toUpperCase()}</Text>
                   <Text>{monthDateString(webPublicationDate)}</Text>
@@ -122,13 +122,13 @@ const styles = StyleSheet.create({
   },
   txt: {
     fontFamily: 'Merriweather',
-    fontSize: 18,
-    lineHeight: 26,
-    color: '#000',
+    fontSize: 20,
+    lineHeight: 30,
+    color: '#3C4043',
     textAlign: 'justify',
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '700',
     color: 'rgba(29, 161, 242, 1)',
   },

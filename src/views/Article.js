@@ -8,38 +8,36 @@ const Article = props => {
 
   return (
     <TouchableOpacity onPress={goToArticle}>
-      <View>
-        <View style={styles.container}>
-          <View style={styles.article}>
-            {result.fields ? (
-              <Image
-                style={styles.imageContainer}
-                source={{
-                  uri: result.fields.thumbnail,
-                }}
-              />
-            ) : null}
+      <View style={styles.container}>
+        <View style={styles.article}>
+          {result.fields ? (
+            <Image
+              style={styles.imageContainer}
+              source={{
+                uri: result.fields.thumbnail,
+              }}
+            />
+          ) : null}
 
-            <View style={styles.body}>
-              <Text style={styles.title}>{result.webTitle}</Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingTop: 5,
-                }}>
-                <View style={styles.section}>
-                  <Text style={styles.subTitle}>{result.sectionName}</Text>
-                </View>
-                <Text
-                  style={{
-                    ...styles.subTitle,
-                    color: "color: 'rgb(101, 119, 135)'",
-                  }}>
-                  {timeOfArticle(result.webPublicationDate)} ago
-                </Text>
+          <View style={styles.body}>
+            <Text style={styles.title}>{result.webTitle}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingTop: 5,
+              }}>
+              <View style={styles.section}>
+                <Text style={styles.subTitle}>{result.sectionName}</Text>
               </View>
+              <Text
+                style={{
+                  ...styles.subTitle,
+                  color: "color: 'rgb(101, 119, 135)'",
+                }}>
+                {timeOfArticle(result.webPublicationDate)} ago
+              </Text>
             </View>
           </View>
         </View>
@@ -51,6 +49,8 @@ const Article = props => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    marginBottom: 10,
+    backgroundColor: '#ffffff',
   },
   article: {
     flexDirection: 'row',
@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Merriweather',
     flex: 1,
     fontSize: 16,
-    color: '#000',
-    textAlign: 'justify',
+    color: '#000000',
+    lineHeight: 22,
   },
   section: {
     height: 22,

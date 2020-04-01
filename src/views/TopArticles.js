@@ -22,7 +22,7 @@ const TopArticles = ({articles, goToArticle}) => {
         animated: true,
       });
       setIndex(currentIndex === 4 ? 0 : ++currentIndex);
-    }, 3000);
+    }, 5000);
     return () => {
       clearTimeout(timeOut);
     };
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 18,
     color: '#000',
-    textAlign: 'justify',
+    lineHeight: 26,
   },
   subHeading: {
     fontFamily: 'Merriweather',

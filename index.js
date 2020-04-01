@@ -4,7 +4,7 @@
 
 import 'react-native-gesture-handler';
 import React from 'react';
-import {AppRegistry} from 'react-native';
+import {AppRegistry, StatusBar} from 'react-native';
 import {name as appName} from './app.json';
 
 import {ApolloClient} from 'apollo-client';
@@ -16,6 +16,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import DetailedArticle from './src/screens/DetailedArticle';
 import {path} from './src/env';
+import InShorts from './src/screens/InShorts';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
+    <StatusBar backgroundColor="#f8faf7" barStyle="dark-content" />
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -38,6 +40,11 @@ const App = () => (
         <Stack.Screen
           name="DetailedArticle"
           component={DetailedArticle}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="InShorts"
+          component={InShorts}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

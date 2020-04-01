@@ -50,6 +50,10 @@ const Root = ({navigation}) => {
     });
   }
 
+  function handleNavigateToInShorts() {
+    navigation.navigate('InShorts');
+  }
+
   function handleSearch(value) {
     try {
       resetPage();
@@ -102,7 +106,9 @@ const Root = ({navigation}) => {
       ref={ref}
       drawerWidth={300}
       drawerPosition={'left'}
-      renderNavigationView={() => <Drawer search={handleSearch} />}>
+      renderNavigationView={() => (
+        <Drawer search={handleSearch} toInShorts={handleNavigateToInShorts} />
+      )}>
       <View style={styles.container}>
         {networkStatus === 1 || networkStatus === 2 || networkStatus === 4 ? (
           <View
@@ -148,7 +154,6 @@ const styles = StyleSheet.create({
   bottomContainer: {
     marginTop: 10,
     flex: 1,
-    backgroundColor: '#ffffff',
   },
 });
 

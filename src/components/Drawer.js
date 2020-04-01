@@ -2,7 +2,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
-const Drawer = ({search}) => {
+const Drawer = ({search, toInShorts}) => {
   const options = ['World', 'India', 'Cricket', 'Football', 'Technology'];
 
   return (
@@ -31,7 +31,7 @@ const Drawer = ({search}) => {
       </View>
 
       <View style={styles.block}>
-        <TouchableOpacity style={styles.inShortBtn}>
+        <TouchableOpacity style={styles.inShortBtn} onPress={toInShorts}>
           <Text style={styles.inShortBtnTxt}>In Shorts View</Text>
         </TouchableOpacity>
       </View>
