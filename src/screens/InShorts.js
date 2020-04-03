@@ -9,10 +9,11 @@ import {
 import {useQuery} from '@apollo/react-hooks';
 import {gql} from 'apollo-boost';
 import NewsApiArticle from '../components/NewsApiArticle';
+import Error from '../components/Error';
 
 const NEWS_API_ARTICLES = gql`
-  {
-    newApiResponse {
+  query getResponse($page: Int!) {
+    newApiResponse(page: $page) {
       articles {
         title
         content
@@ -23,26 +24,47 @@ const NEWS_API_ARTICLES = gql`
   }
 `;
 
-const InShorts = () => {
-  const {error, data, loading, networkStatus, refetch} = useQuery(
-    NEWS_API_ARTICLES,
-    {
-      variables: {page: 1, search: null},
-      notifyOnNetworkStatusChange: true,
-    },
-  );
+const InShorts = ({navigation}) => {
+  const {error, data, networkStatus, refetch} = useQuery(NEWS_API_ARTICLES, {
+    variables: {page: 1},
+    notifyOnNetworkStatusChange: true,
+  });
+
+  function navigateToWebView(uri) {
+    navigation.navigate('WebView', {uri: uri});
+  }
+
+  async function handleRefech() {
+    try {
+      await refetch();
+    } catch (_) {}
+  }
+
+  if (error) {
+    return (
+      <Error
+        message={error.message.split(':')[1]}
+        refetch={() => handleRefech()}
+      />
+    );
+  }
 
   return (
     <View style={styles.container}>
-      {loading ? (
+      {networkStatus === 1 || networkStatus === 2 || networkStatus === 4 ? (
         <View style={styles.loading}>
-          <ActivityIndicator size="large" color="#0086da" />
+          <ActivityIndicator size="large" color="rgba(29, 161, 242, 1)" />
         </View>
       ) : (
         <FlatList
           data={data.newApiResponse.articles}
           pagingEnabled={true}
-          renderItem={({item}) => <NewsApiArticle article={item} />}
+          renderItem={({item}) => (
+            <NewsApiArticle
+              article={item}
+              toWebView={() => navigateToWebView(item.url)}
+            />
+          )}
           keyExtractor={(_, index) => String(index)}
           showsVerticalScrollIndicator={false}
         />

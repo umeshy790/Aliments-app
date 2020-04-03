@@ -1,7 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
-const NewsApiArticle = ({article}) => {
+const NewsApiArticle = ({article, toWebView}) => {
   return (
     <View style={styles.container}>
       <Image
@@ -17,6 +25,10 @@ const NewsApiArticle = ({article}) => {
           {article.content ? article.content.split('[')[0] : null}
         </Text>
       </View>
+
+      <TouchableOpacity style={styles.iconBtn} onPress={toWebView}>
+        <Icon name="launch" size={30} color="#ffffff" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -29,23 +41,17 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   img: {
-    height: Dimensions.get('window').height - 200,
-    // borderTopLeftRadius: 30,
-    // borderTopRightRadius: 30,
+    height: 280,
+    width: Dimensions.get('window').width,
   },
   body: {
     flex: 1,
     padding: 20,
-    position: 'absolute',
-    left: 20,
-    right: 20,
-    bottom: 20,
     backgroundColor: '#ffffff',
-    borderRadius: 4,
   },
   title: {
     fontFamily: 'Merriweather',
-    fontSize: 22,
+    fontSize: 20,
     color: '#000',
     lineHeight: 28,
     fontWeight: '500',
@@ -53,8 +59,20 @@ const styles = StyleSheet.create({
   content: {
     paddingTop: 16,
     fontFamily: 'Merriweather',
-    fontSize: 20,
+    fontSize: 18,
     color: '#3C4043',
     lineHeight: 28,
+  },
+
+  iconBtn: {
+    position: 'absolute',
+    right: 20,
+    bottom: 30,
+    backgroundColor: 'rgba(29, 161, 242, 1)',
+    height: 60,
+    width: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: (60 + 60) / 2,
   },
 });

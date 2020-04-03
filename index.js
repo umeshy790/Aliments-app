@@ -17,6 +17,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import DetailedArticle from './src/screens/DetailedArticle';
 import {path} from './src/env';
 import InShorts from './src/screens/InShorts';
+import ShortsWebView from './src/screens/ShortsWebView';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,7 @@ const App = () => (
           component={InShorts}
           options={{headerShown: false}}
         />
+        <Stack.Screen name="WebView" component={ShortsWebView} />
       </Stack.Navigator>
     </NavigationContainer>
   </ApolloProvider>
