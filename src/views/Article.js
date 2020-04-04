@@ -1,14 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {timeOfArticle} from '../utils/formate';
+import {ThemeContext} from '../theme';
 
-const Article = props => {
-  const {result, goToArticle} = props;
+const Article = ({result, goToArticle}) => {
+  const theme = useContext(ThemeContext);
 
   return (
     <TouchableOpacity onPress={goToArticle}>
-      <View style={styles.container}>
+      <View
+        style={{
+          ...styles.container,
+          backgroundColor: theme.surfaceBackgroundColor,
+        }}>
         <View style={styles.article}>
           {result.fields ? (
             <Image
@@ -20,7 +25,14 @@ const Article = props => {
           ) : null}
 
           <View style={styles.body}>
-            <Text style={styles.title}>{result.webTitle}</Text>
+            <Text
+              style={{
+                ...styles.title,
+                color: theme.primaryTextColor,
+                ...theme.font.regular,
+              }}>
+              {result.webTitle}
+            </Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -28,13 +40,17 @@ const Article = props => {
                 justifyContent: 'space-between',
                 paddingTop: 5,
               }}>
-              <View style={styles.section}>
+              <View
+                style={{
+                  ...styles.section,
+                  backgroundColor: theme.primaryColor,
+                }}>
                 <Text style={styles.subTitle}>{result.sectionName}</Text>
               </View>
               <Text
                 style={{
                   ...styles.subTitle,
-                  color: "color: 'rgb(101, 119, 135)'",
+                  color: theme.primaryTextColorLight,
                 }}>
                 {timeOfArticle(result.webPublicationDate)} ago
               </Text>
@@ -50,14 +66,13 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     marginBottom: 10,
-    backgroundColor: '#ffffff',
   },
   article: {
     flexDirection: 'row',
   },
   imageContainer: {
-    width: 70,
-    minHeight: 70,
+    width: 80,
+    minHeight: 80,
     borderRadius: 10,
   },
   body: {
@@ -65,22 +80,18 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   title: {
-    fontFamily: 'Merriweather',
     flex: 1,
-    fontSize: 16,
-    color: '#000000',
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 16,
   },
   section: {
     height: 22,
-    backgroundColor: 'rgba(29, 161, 242, 1)',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
   },
   subTitle: {
-    fontFamily: 'Merriweather',
-    fontSize: 14,
+    fontSize: 12,
     color: '#ffffff',
   },
 });

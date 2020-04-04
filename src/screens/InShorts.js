@@ -49,6 +49,8 @@ const InShorts = ({navigation}) => {
     );
   }
 
+  console.log(data);
+
   return (
     <View style={styles.container}>
       {networkStatus === 1 || networkStatus === 2 || networkStatus === 4 ? (
@@ -56,18 +58,21 @@ const InShorts = ({navigation}) => {
           <ActivityIndicator size="large" color="rgba(29, 161, 242, 1)" />
         </View>
       ) : (
-        <FlatList
-          data={data.newApiResponse.articles}
-          pagingEnabled={true}
-          renderItem={({item}) => (
-            <NewsApiArticle
-              article={item}
-              toWebView={() => navigateToWebView(item.url)}
-            />
-          )}
-          keyExtractor={(_, index) => String(index)}
-          showsVerticalScrollIndicator={false}
-        />
+        <View style={{flex: 1, backgroundColor: 'yellow'}}>
+          <FlatList
+            data={data.newApiResponse.articles}
+            contentContainerStyle={{flexGrow: 1}}
+            pagingEnabled={true}
+            renderItem={({item}) => (
+              <NewsApiArticle
+                article={item}
+                toWebView={() => navigateToWebView(item.url)}
+              />
+            )}
+            keyExtractor={(_, index) => String(index)}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
       )}
     </View>
   );
@@ -78,6 +83,7 @@ export default InShorts;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // backgroundColor: 'red',
   },
   loading: {
     flex: 1,

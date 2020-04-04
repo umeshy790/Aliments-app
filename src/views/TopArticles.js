@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     padding: 16,
     borderRadius: 20,
+    opacity: 0.9,
   },
   block: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {useQuery} from '@apollo/react-hooks';
 import {gql} from 'apollo-boost';
 import {
@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import Error from '../components/Error';
 import {monthDateString} from '../utils/formate';
+import {ThemeContext} from '../theme';
 
 const GET_ARTICLE_TEXT = gql`
   query Content($id: String!) {
@@ -35,6 +36,8 @@ const DetailedArticle = ({route, _}) => {
     sectionName,
   } = route.params;
 
+  const theme = useContext(ThemeContext);
+
   const {error, data, refetch, networkStatus} = useQuery(GET_ARTICLE_TEXT, {
     variables: {id},
     notifyOnNetworkStatusChange: true,
@@ -47,27 +50,35 @@ const DetailedArticle = ({route, _}) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, backgroundColor: theme.backgroundColor}}>
       <Image source={{uri: thumbnail}} style={styles.img} />
       <View style={styles.body}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          contentContainerStyle={{flexGrow: 1}}
+          showsVerticalScrollIndicator={false}>
           <View
             style={{
-              height: 275,
-              backgroundColor: 'transparent',
-            }}
-          />
-          <View style={styles.txtContainer}>
+              ...styles.txtContainer,
+              backgroundColor: theme.surfaceBackgroundColor,
+            }}>
             {networkStatus === 1 || networkStatus === 4 ? (
-              <ActivityIndicator size="large" color="rgba(29, 161, 242, 1)" />
+              <ActivityIndicator size="large" color={theme.primaryColor} />
             ) : error ? (
               <Error
                 message={error.message.split(':')[1]}
                 refetch={handleRefech}
               />
             ) : (
-              <View>
-                <Text style={{...styles.txt, fontWeight: '700'}}>
+              <View
+                style={{
+                  flex: 1,
+                }}>
+                <Text
+                  style={{
+                    ...styles.txt,
+                    ...theme.font.regular,
+                    color: theme.primaryTextColor,
+                  }}>
                   {webTitle}
                 </Text>
                 <View
@@ -77,10 +88,23 @@ const DetailedArticle = ({route, _}) => {
                     justifyContent: 'space-between',
                     paddingVertical: 16,
                   }}>
-                  <Text style={styles.title}>{sectionName.toUpperCase()}</Text>
+                  <Text
+                    style={{
+                      ...styles.title,
+                      ...theme.font.regular,
+                      color: theme.primaryColor,
+                    }}>
+                    {sectionName.toUpperCase()}
+                  </Text>
                   <Text>{monthDateString(webPublicationDate)}</Text>
                 </View>
-                <Text style={styles.txt}>
+                <Text
+                  style={{
+                    ...styles.txt,
+                    ...theme.font.light,
+                    lineHeight: 30,
+                    color: theme.primaryTextColorLight,
+                  }}>
                   {data.getContent.content.fields.bodyText}
                 </Text>
               </View>
@@ -95,7 +119,6 @@ const DetailedArticle = ({route, _}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
   },
   img: {
     height: 300,
@@ -109,28 +132,25 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 1,
+    zIndex: 10,
   },
   txtContainer: {
+    flex: 1,
     padding: 16,
+    marginTop: 274,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    minHeight: Dimensions.get('window').width - 30,
+    // paddingTop: 30,
+    // borderTopLeftRadius: 10,
+    // borderTopRightRadius: 10,
+    overflow: 'hidden',
   },
   txt: {
-    fontFamily: 'Merriweather',
-    fontSize: 20,
-    lineHeight: 30,
-    color: '#3C4043',
-    textAlign: 'justify',
+    fontSize: 18,
+    lineHeight: 26,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: 'rgba(29, 161, 242, 1)',
+    fontSize: 16,
   },
 });
 

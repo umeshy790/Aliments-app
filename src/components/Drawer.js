@@ -10,7 +10,7 @@ const Drawer = ({search, toInShorts}) => {
       <View style={{height: 100}} />
       <View style={styles.heading}>
         <View style={styles.divider} />
-        <Text style={styles.title}>The Gurdian</Text>
+        <Text style={styles.title}>The Guardian</Text>
         <View style={styles.divider} />
       </View>
 
@@ -32,7 +32,7 @@ const Drawer = ({search, toInShorts}) => {
 
       <View style={styles.block}>
         <TouchableOpacity style={styles.inShortBtn} onPress={toInShorts}>
-          <Text style={styles.inShortBtnTxt}>In Shorts View</Text>
+          <Text style={styles.inShortBtnTxt}>Change To Shorts</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -74,21 +74,24 @@ const styles = StyleSheet.create({
   },
   block: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   inShortBtn: {
+    marginTop: 10,
     height: 35,
     width: 200,
-    borderWidth: 0.2,
-    borderColor: 'rgb(101, 119, 134)',
+    // borderWidth: 0.2,
+    // borderColor: 'rgb(101, 119, 134)',
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(29, 161, 242, 1)',
   },
   inShortBtnTxt: {
     fontFamily: 'Merriweather',
     fontSize: 12,
-    color: 'rgb(101, 119, 134)',
+    // color: 'rgb(101, 119, 134)',
+    color: '#ffffff',
   },
 });

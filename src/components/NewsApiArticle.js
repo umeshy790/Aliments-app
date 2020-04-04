@@ -27,7 +27,7 @@ const NewsApiArticle = ({article, toWebView}) => {
       </View>
 
       <TouchableOpacity style={styles.iconBtn} onPress={toWebView}>
-        <Icon name="launch" size={30} color="#ffffff" />
+        <Icon name="launch" size={26} color="#ffffff" />
       </TouchableOpacity>
     </View>
   );
@@ -37,7 +37,7 @@ export default NewsApiArticle;
 
 const styles = StyleSheet.create({
   container: {
-    height: Dimensions.get('window').height,
+    flex: 1,
     position: 'relative',
   },
   img: {
@@ -65,14 +65,24 @@ const styles = StyleSheet.create({
   },
 
   iconBtn: {
+    borderWidth: 1,
+    borderColor: 'rgba(29, 161, 242, 1)',
     position: 'absolute',
     right: 20,
     bottom: 30,
     backgroundColor: 'rgba(29, 161, 242, 1)',
-    height: 60,
-    width: 60,
+    height: 59,
+    width: 59,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: (60 + 60) / 2,
+    borderRadius: (59 + 59) / 2,
+    shadowColor: 'rgba(29, 161, 242, 1)',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
   },
 });

@@ -3,7 +3,7 @@
  */
 
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useState} from 'react';
 import {AppRegistry, StatusBar} from 'react-native';
 import {name as appName} from './app.json';
 
@@ -18,6 +18,7 @@ import DetailedArticle from './src/screens/DetailedArticle';
 import {path} from './src/env';
 import InShorts from './src/screens/InShorts';
 import ShortsWebView from './src/screens/ShortsWebView';
+import {ThemeContext, Theme} from './src/theme';
 
 const Stack = createStackNavigator();
 
@@ -28,30 +29,38 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <StatusBar backgroundColor="#f8faf7" barStyle="dark-content" />
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Root}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="DetailedArticle"
-          component={DetailedArticle}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="InShorts"
-          component={InShorts}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen name="WebView" component={ShortsWebView} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  </ApolloProvider>
-);
+function App() {
+  const [theme, setTheme] = useState(Theme.lightTheme);
+
+  // setTimeout(() => setTheme(Theme.darkTheme), 5000);
+
+  return (
+    <ApolloProvider client={client}>
+      <ThemeContext.Provider value={theme}>
+        <StatusBar backgroundColor="#f8faf7" barStyle="dark-content" />
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Home"
+              component={Root}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="DetailedArticle"
+              component={DetailedArticle}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="InShorts"
+              component={InShorts}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen name="WebView" component={ShortsWebView} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeContext.Provider>
+    </ApolloProvider>
+  );
+}
 
 AppRegistry.registerComponent(appName, () => App);
