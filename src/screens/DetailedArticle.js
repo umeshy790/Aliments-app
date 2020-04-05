@@ -50,8 +50,14 @@ const DetailedArticle = ({route, _}) => {
   }
 
   return (
-    <View style={{...styles.container, backgroundColor: theme.backgroundColor}}>
-      <Image source={{uri: thumbnail}} style={styles.img} />
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: theme.backgroundColor,
+      }}>
+      {thumbnail ? (
+        <Image source={{uri: thumbnail}} style={styles.img} />
+      ) : null}
       <View style={styles.body}>
         <ScrollView
           contentContainerStyle={{flexGrow: 1}}
@@ -76,7 +82,7 @@ const DetailedArticle = ({route, _}) => {
                 <Text
                   style={{
                     ...styles.txt,
-                    ...theme.font.regular,
+                    ...theme.font.bold,
                     color: theme.primaryTextColor,
                   }}>
                   {webTitle}
@@ -96,12 +102,14 @@ const DetailedArticle = ({route, _}) => {
                     }}>
                     {sectionName.toUpperCase()}
                   </Text>
-                  <Text>{monthDateString(webPublicationDate)}</Text>
+                  <Text style={{...theme.font.medium, fontSize: 14}}>
+                    {monthDateString(webPublicationDate)}
+                  </Text>
                 </View>
                 <Text
                   style={{
                     ...styles.txt,
-                    ...theme.font.light,
+                    ...theme.font.regular,
                     lineHeight: 30,
                     color: theme.primaryTextColorLight,
                   }}>
@@ -140,13 +148,10 @@ const styles = StyleSheet.create({
     marginTop: 274,
     alignItems: 'center',
     justifyContent: 'center',
-    // paddingTop: 30,
-    // borderTopLeftRadius: 10,
-    // borderTopRightRadius: 10,
     overflow: 'hidden',
   },
   txt: {
-    fontSize: 18,
+    fontSize: 16,
     lineHeight: 26,
   },
   title: {

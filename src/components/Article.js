@@ -45,14 +45,17 @@ const Article = ({result, goToArticle}) => {
                   ...styles.section,
                   backgroundColor: theme.primaryColor,
                 }}>
-                <Text style={styles.subTitle}>{result.sectionName}</Text>
+                <Text style={{...styles.subTitle, ...theme.font.regular}}>
+                  {result.sectionName}
+                </Text>
               </View>
               <Text
                 style={{
                   ...styles.subTitle,
+                  ...theme.font.medium,
                   color: theme.primaryTextColorLight,
                 }}>
-                {timeOfArticle(result.webPublicationDate)} ago
+                {timeOfArticle(result.webPublicationDate)}
               </Text>
             </View>
           </View>
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 14,
-    lineHeight: 16,
+    lineHeight: 18,
   },
   section: {
     height: 22,

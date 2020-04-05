@@ -1,15 +1,18 @@
-import React from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   ActivityIndicator,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import {useQuery} from '@apollo/react-hooks';
 import {gql} from 'apollo-boost';
 import NewsApiArticle from '../components/NewsApiArticle';
 import Error from '../components/Error';
+import {ThemeContext} from '../theme';
 
 const NEWS_API_ARTICLES = gql`
   query getResponse($page: Int!) {
@@ -30,6 +33,8 @@ const InShorts = ({navigation}) => {
     notifyOnNetworkStatusChange: true,
   });
 
+  const theme = useContext(ThemeContext);
+
   function navigateToWebView(uri) {
     navigation.navigate('WebView', {uri: uri});
   }
@@ -49,16 +54,14 @@ const InShorts = ({navigation}) => {
     );
   }
 
-  console.log(data);
-
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, backgroundColor: theme.backgroundColor}}>
       {networkStatus === 1 || networkStatus === 2 || networkStatus === 4 ? (
         <View style={styles.loading}>
-          <ActivityIndicator size="large" color="rgba(29, 161, 242, 1)" />
+          <ActivityIndicator size="large" color={theme.primaryColor} />
         </View>
       ) : (
-        <View style={{flex: 1, backgroundColor: 'yellow'}}>
+        <View style={{height: Dimensions.get('window').height}}>
           <FlatList
             data={data.newApiResponse.articles}
             contentContainerStyle={{flexGrow: 1}}
@@ -71,6 +74,8 @@ const InShorts = ({navigation}) => {
             )}
             keyExtractor={(_, index) => String(index)}
             showsVerticalScrollIndicator={false}
+            removeClippedSubviews={true}
+            style={{flex: 1}}
           />
         </View>
       )}
@@ -83,7 +88,6 @@ export default InShorts;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'red',
   },
   loading: {
     flex: 1,

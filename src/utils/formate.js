@@ -24,12 +24,15 @@ export function timeOfArticle(time) {
   let days = Math.floor(duration / (1000 * 60 * 60 * 24));
 
   if (seconds < 60) {
-    return seconds === 1 ? seconds + ' sec ' : seconds + ' secs ';
+    return seconds === 1 ? seconds + ' sec ' : seconds + ' secs ago';
   } else if (minutes < 60) {
-    return minutes === 1 ? minutes + ' min ' : minutes + ' mins ';
+    return minutes === 1 ? minutes + ' min ' : minutes + ' mins ago';
   } else if (hours < 24) {
-    return hours === 1 ? hours + ' hr ' : hours + ' hrs ';
+    return hours === 1 ? hours + ' hr ' : hours + ' hrs ago';
   } else {
+    if (days > 1) {
+      return monthDateString(time);
+    }
     return days === 1 ? days + ' day ' : days + ' days ';
   }
 }

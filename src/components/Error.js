@@ -1,12 +1,31 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {ThemeContext} from '../theme';
 
 const Error = ({message, refetch}) => {
+  const theme = useContext(ThemeContext);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.txt}>{message}</Text>
-      <TouchableOpacity style={styles.btn} onPress={() => refetch()}>
-        <Text style={styles.btnText}>Retry</Text>
+    <View style={{...styles.container, backgroundColor: theme.backgroundColor}}>
+      <Text
+        style={{
+          ...styles.txt,
+          ...theme.font.bold,
+          color: theme.primaryTextColor,
+        }}>
+        {message}
+      </Text>
+      <TouchableOpacity
+        style={{...styles.btn, borderColor: theme.primaryColor}}
+        onPress={() => refetch()}>
+        <Text
+          style={{
+            ...styles.btnText,
+            ...theme.font.medium,
+            color: theme.primaryColor,
+          }}>
+          Retry
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -17,26 +36,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
   },
   txt: {
-    fontFamily: 'Merriweather',
-    fontSize: 12,
-    color: '#000',
+    fontSize: 14,
     paddingBottom: 16,
   },
   btn: {
-    height: 35,
+    height: 40,
     paddingHorizontal: 20,
     alignContent: 'center',
     justifyContent: 'center',
-    borderColor: 'rgba(29, 161, 242, 1)',
     borderWidth: 1,
     borderRadius: 4,
   },
   btnText: {
     fontSize: 14,
-    color: 'rgba(29, 161, 242, 1)',
   },
 });
 

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef} from 'react';
+import React, {useRef, useContext} from 'react';
 import {
   View,
   StyleSheet,
@@ -9,11 +9,13 @@ import {
 } from 'react-native';
 import {useQuery} from '@apollo/react-hooks';
 import {gql} from 'apollo-boost';
-import Article from './views/Article';
-import TopArticles from './views/TopArticles';
+
 import Error from './components/Error';
 import Drawer from './components/Drawer';
 import {getPage, setPage, resetPage} from './utils/properties';
+import TopArticles from './components/TopArticles';
+import Article from './components/Article';
+import {ThemeContext} from './theme';
 
 const ARTICLES = gql`
   query getResponse($page: Int!, $search: String) {
@@ -32,18 +34,22 @@ const ARTICLES = gql`
   }
 `;
 
-const Root = ({navigation}) => {
+const Root = ({route, navigation}) => {
   const {error, data, fetchMore, networkStatus, refetch} = useQuery(ARTICLES, {
     variables: {page: 1, search: null},
     notifyOnNetworkStatusChange: true,
   });
+
+  const toggleTheme = route.params.toggleTheme;
+
+  const theme = useContext(ThemeContext);
 
   let ref = useRef(null);
 
   function handleGoToArticle(result) {
     navigation.navigate('DetailedArticle', {
       id: result.id,
-      thumbnail: result.fields.thumbnail,
+      thumbnail: result.fields ? result.fields.thumbnail : null,
       webTitle: result.webTitle,
       webPublicationDate: result.webPublicationDate,
       sectionName: result.sectionName,
@@ -107,13 +113,21 @@ const Root = ({navigation}) => {
       drawerWidth={300}
       drawerPosition={'left'}
       renderNavigationView={() => (
-        <Drawer search={handleSearch} toInShorts={handleNavigateToInShorts} />
+        <Drawer
+          search={handleSearch}
+          toInShorts={handleNavigateToInShorts}
+          toggleTheme={() => toggleTheme()}
+        />
       )}>
-      <View style={styles.container}>
+      <View
+        style={{
+          ...styles.container,
+          backgroundColor: theme.backgroundColor,
+        }}>
         {networkStatus === 1 || networkStatus === 2 || networkStatus === 4 ? (
           <View
             style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <ActivityIndicator size="large" color="#0086da" />
+            <ActivityIndicator size="large" color={theme.primaryColor} />
           </View>
         ) : (
           <View style={{flex: 1}}>
@@ -149,7 +163,6 @@ const Root = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgb(248, 250, 247)',
   },
   bottomContainer: {
     marginTop: 10,

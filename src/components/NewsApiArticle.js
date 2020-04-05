@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,8 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import {ThemeContext} from '../theme';
 
 const NewsApiArticle = ({article, toWebView}) => {
+  const theme = useContext(ThemeContext);
+
   return (
     <View style={styles.container}>
       <Image
@@ -19,9 +22,21 @@ const NewsApiArticle = ({article, toWebView}) => {
         style={styles.img}
       />
 
-      <View style={styles.body}>
-        <Text style={styles.title}>{article.title}</Text>
-        <Text style={styles.content}>
+      <View style={{...styles.body, ...theme.surfaceBackgroundColor}}>
+        <Text
+          style={{
+            ...styles.title,
+            ...theme.font.bold,
+            color: theme.primaryTextColor,
+          }}>
+          {article.title}
+        </Text>
+        <Text
+          style={{
+            ...styles.content,
+            ...theme.font.light,
+            color: theme.primaryTextColorLight,
+          }}>
           {article.content ? article.content.split('[')[0] : null}
         </Text>
       </View>
@@ -37,7 +52,7 @@ export default NewsApiArticle;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: Dimensions.get('window').height,
     position: 'relative',
   },
   img: {
@@ -47,20 +62,14 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#ffffff',
   },
   title: {
-    fontFamily: 'Merriweather',
-    fontSize: 20,
-    color: '#000',
+    fontSize: 18,
     lineHeight: 28,
-    fontWeight: '500',
   },
   content: {
     paddingTop: 16,
-    fontFamily: 'Merriweather',
-    fontSize: 18,
-    color: '#3C4043',
+    fontSize: 16,
     lineHeight: 28,
   },
 

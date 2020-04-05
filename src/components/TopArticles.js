@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -10,8 +10,11 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {monthDateString} from '../utils/formate';
+import {ThemeContext} from '../theme';
 
 const TopArticles = ({articles, goToArticle}) => {
+  const theme = useContext(ThemeContext);
+
   let [currentIndex, setIndex] = useState(0);
   const _scrollRef = useRef(null);
 
@@ -53,19 +56,34 @@ const TopArticles = ({articles, goToArticle}) => {
                   }}
                 />
               ) : null}
-              <View style={styles.title}>
-                <Text style={styles.heading}>{article.webTitle}</Text>
+              <View
+                style={{
+                  ...styles.title,
+                  backgroundColor: theme.surfaceBackgroundColor,
+                }}>
+                <Text
+                  style={{
+                    ...styles.heading,
+                    ...theme.font.bold,
+                    color: theme.primaryTextColor,
+                  }}>
+                  {article.webTitle}
+                </Text>
                 <View style={styles.block}>
                   <Text
                     style={{
                       ...styles.subHeading,
-                      fontWeight: '700',
-                      color: 'rgba(29, 161, 242, 1)',
+                      ...theme.font.bold,
+                      color: theme.primaryColor,
                     }}>
                     {' '}
                     {article.sectionName.toUpperCase()}
                   </Text>
-                  <Text style={styles.subHeading}>
+                  <Text
+                    style={{
+                      ...theme.font.medium,
+                      color: theme.primaryTextColorLight,
+                    }}>
                     {monthDateString(article.webPublicationDate)}
                   </Text>
                 </View>
@@ -90,7 +108,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginHorizontal: 20,
     bottom: 16,
-    backgroundColor: '#ffffff',
     padding: 16,
     borderRadius: 20,
     opacity: 0.9,
@@ -102,16 +119,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   heading: {
-    fontFamily: 'Merriweather',
-    fontWeight: '500',
-    fontSize: 18,
-    color: '#000',
+    fontSize: 16,
     lineHeight: 26,
   },
   subHeading: {
-    fontFamily: 'Merriweather',
-    fontSize: 16,
-    color: 'rgb(101, 119, 135)',
+    fontSize: 14,
   },
 });
 

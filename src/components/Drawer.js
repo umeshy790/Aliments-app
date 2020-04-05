@@ -1,39 +1,79 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {ThemeContext} from '../theme';
 
-const Drawer = ({search, toInShorts}) => {
-  const options = ['World', 'India', 'Cricket', 'Football', 'Technology'];
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const Drawer = ({search, toInShorts, toggleTheme}) => {
+  const options = ['World', 'Cricket', 'Football', 'Technology'];
+
+  const theme = useContext(ThemeContext);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: theme.surfaceBackgroundColor,
+      }}>
       <View style={{height: 100}} />
-      <View style={styles.heading}>
-        <View style={styles.divider} />
-        <Text style={styles.title}>The Guardian</Text>
-        <View style={styles.divider} />
-      </View>
 
       <View
         style={{
-          borderBottomWidth: 0.3,
-          borderColor: 'rgb(101, 119, 134)',
-          paddingBottom: 5,
+          borderTopWidth: 0.5,
+          borderBottomWidth: 0.5,
+          borderColor: theme.primaryTextColorLight,
+          paddingVertical: 5,
         }}>
-        {options.map(option => (
+        {options.map((option) => (
           <TouchableOpacity
             style={styles.btn}
             key={option}
             onPress={() => search(option === 'World' ? null : option)}>
-            <Text style={styles.btnTxt}>{option}</Text>
+            <Text
+              style={{
+                ...styles.btnTxt,
+                ...theme.font.light,
+                color: theme.primaryTextColorLight,
+              }}>
+              {option}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
 
       <View style={styles.block}>
-        <TouchableOpacity style={styles.inShortBtn} onPress={toInShorts}>
-          <Text style={styles.inShortBtnTxt}>Change To Shorts</Text>
-        </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <TouchableOpacity
+            style={{...styles.inShortBtn, backgroundColor: theme.primaryColor}}
+            onPress={toInShorts}>
+            <Text
+              style={{
+                ...styles.inShortBtnTxt,
+                ...theme.font.medium,
+              }}>
+              Change To Shorts
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: (40 + 40) / 2,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: theme.primaryColor,
+            }}
+            onPress={toggleTheme}>
+            <Icon name="theme-light-dark" size={20} color="#ffffff" />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -44,21 +84,6 @@ export default Drawer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-  },
-  heading: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  divider: {
-    flex: 1,
-    borderBottomWidth: 0.3,
-    borderColor: 'rgb(101, 119, 134)',
-  },
-  title: {
-    color: 'rgb(101, 119, 134)',
-    fontSize: 14,
-    paddingHorizontal: 14,
   },
   btn: {
     height: 45,
@@ -68,30 +93,22 @@ const styles = StyleSheet.create({
     width: 300,
   },
   btnTxt: {
-    fontFamily: 'Merriweather',
     fontSize: 16,
-    color: '#202124',
   },
   block: {
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    padding: 10,
+    justifyContent: 'flex-end',
   },
   inShortBtn: {
-    marginTop: 10,
     height: 35,
-    width: 200,
-    // borderWidth: 0.2,
-    // borderColor: 'rgb(101, 119, 134)',
+    width: 180,
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(29, 161, 242, 1)',
   },
   inShortBtnTxt: {
-    fontFamily: 'Merriweather',
     fontSize: 12,
-    // color: 'rgb(101, 119, 134)',
     color: '#ffffff',
   },
 });
