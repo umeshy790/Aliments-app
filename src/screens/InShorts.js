@@ -2,7 +2,6 @@
 import React, {useContext} from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   ActivityIndicator,
   FlatList,
@@ -19,7 +18,7 @@ const NEWS_API_ARTICLES = gql`
     newApiResponse(page: $page) {
       articles {
         title
-        content
+        description
         urlToImage
         url
       }

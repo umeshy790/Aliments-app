@@ -20,12 +20,12 @@ const Drawer = ({search, toInShorts, toggleTheme}) => {
 
       <View
         style={{
-          borderTopWidth: 0.5,
-          borderBottomWidth: 0.5,
+          borderTopWidth: StyleSheet.hairlineWidth,
+          borderBottomWidth: StyleSheet.hairlineWidth,
           borderColor: theme.primaryTextColorLight,
           paddingVertical: 5,
         }}>
-        {options.map((option) => (
+        {options.map(option => (
           <TouchableOpacity
             style={styles.btn}
             key={option}

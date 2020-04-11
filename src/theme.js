@@ -28,7 +28,7 @@ export const Theme = {
     primaryTextColor: '#000000',
     primaryTextColorLight: '#3C4043',
     font: configFonts(),
-    backgroundColor: 'rgb(248, 250, 247)',
+    backgroundColor: 'rgba(202, 223, 233, 0.12)',
     surfaceBackgroundColor: '#ffffff',
     barStyle: 'dark-content',
   },
@@ -38,9 +38,10 @@ export const Theme = {
     primaryTextColorLight: '#ffffff',
     font: configFonts(),
     backgroundColor: '#121212',
-    surfaceBackgroundColor: '#021923',
+    surfaceBackgroundColor: '#000000',
     barStyle: 'light-content',
   },
 };
 
+// surfaceBackgroundColor: '#021923',
 export const ThemeContext = React.createContext(Theme.lightTheme);

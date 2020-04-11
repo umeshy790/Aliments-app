@@ -20,6 +20,7 @@ import InShorts from './src/screens/InShorts';
 import ShortsWebView from './src/screens/ShortsWebView';
 import {ThemeContext, Theme} from './src/theme';
 import {setMode, getMode} from './src/utils/properties';
+import SplashScreen from 'react-native-splash-screen';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,9 @@ const client = new ApolloClient({
 function App() {
   const [theme, setTheme] = useState(Theme.lightTheme);
 
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   /**
    * need to improvisation
    */
@@ -46,7 +50,7 @@ function App() {
     <ApolloProvider client={client}>
       <ThemeContext.Provider value={theme}>
         <StatusBar
-          backgroundColor={theme.backgroundColor}
+          backgroundColor={theme.surfaceBackgroundColor}
           barStyle={theme.barStyle}
         />
         <NavigationContainer>

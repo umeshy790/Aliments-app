@@ -102,7 +102,12 @@ const DetailedArticle = ({route, _}) => {
                     }}>
                     {sectionName.toUpperCase()}
                   </Text>
-                  <Text style={{...theme.font.medium, fontSize: 14}}>
+                  <Text
+                    style={{
+                      ...theme.font.medium,
+                      color: theme.primaryTextColorLight,
+                      fontSize: 14,
+                    }}>
                     {monthDateString(webPublicationDate)}
                   </Text>
                 </View>

@@ -22,7 +22,8 @@ const NewsApiArticle = ({article, toWebView}) => {
         style={styles.img}
       />
 
-      <View style={{...styles.body, ...theme.surfaceBackgroundColor}}>
+      <View
+        style={{...styles.body, backgroundColor: theme.surfaceBackgroundColor}}>
         <Text
           style={{
             ...styles.title,
@@ -37,7 +38,7 @@ const NewsApiArticle = ({article, toWebView}) => {
             ...theme.font.light,
             color: theme.primaryTextColorLight,
           }}>
-          {article.content ? article.content.split('[')[0] : null}
+          {article.description}
         </Text>
       </View>
 
