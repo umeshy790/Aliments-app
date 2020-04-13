@@ -3,11 +3,7 @@
 
     <item
         android:drawable="@color/blue"/>
-
     <item
-        android:width="200dp"
-        android:height="200dp"
-        android:drawable="@mipmap/ic_launcher"
-        android:gravity="center" />
-
+        android:drawable="@mipmap/splash_screen"
+       />
 </layer-list>

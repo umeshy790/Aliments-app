@@ -133,7 +133,7 @@ const Root = ({route, navigation}) => {
           <View style={{flex: 1}}>
             <TopArticles
               articles={data.response.results.slice(0, 5)}
-              goToArticle={(article) => handleGoToArticle(article)}
+              goToArticle={article => handleGoToArticle(article)}
             />
             <View style={styles.bottomContainer}>
               <FlatList
@@ -165,8 +165,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomContainer: {
-    marginTop: 10,
-    flex: 1,
+    flex: 2,
   },
 });
 

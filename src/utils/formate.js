@@ -28,12 +28,12 @@ export function timeOfArticle(time) {
   } else if (minutes < 60) {
     return minutes === 1 ? minutes + ' min ' : minutes + ' mins ago';
   } else if (hours < 24) {
-    return hours === 1 ? hours + ' hr ' : hours + ' hrs ago';
+    return hours === 1 ? hours + ' hr ago' : hours + ' hrs ago';
   } else {
     if (days > 1) {
       return monthDateString(time);
     }
-    return days === 1 ? days + ' day ' : days + ' days ';
+    return days === 1 ? days + ' day ago' : days + ' days ago';
   }
 }
 
