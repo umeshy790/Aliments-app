@@ -22,7 +22,7 @@ const Drawer = ({search, toInShorts, toggleTheme}) => {
         style={{
           borderTopWidth: StyleSheet.hairlineWidth,
           borderBottomWidth: StyleSheet.hairlineWidth,
-          borderColor: theme.primaryTextColorLight,
+          borderColor: theme.borderColor,
           paddingVertical: 5,
         }}>
         {options.map(option => (
@@ -48,31 +48,26 @@ const Drawer = ({search, toInShorts, toggleTheme}) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
+            borderTopColor: theme.borderColor,
+            borderTopWidth: StyleSheet.hairlineWidth,
+            height: 55,
           }}>
-          <TouchableOpacity
-            style={{...styles.inShortBtn, backgroundColor: theme.primaryColor}}
-            onPress={toInShorts}>
-            <Text
-              style={{
-                ...styles.inShortBtnTxt,
-                ...theme.font.medium,
-              }}>
-              Change To Shorts
-            </Text>
-          </TouchableOpacity>
+          <Icon.Button
+            name="lightbulb-on-outline"
+            color={theme.primaryColor}
+            style={{backgroundColor: theme.surfaceBackgroundColor}}
+            size={25}
+            onPress={toggleTheme}
+          />
 
-          <TouchableOpacity
-            style={{
-              height: 40,
-              width: 40,
-              borderRadius: (40 + 40) / 2,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: theme.primaryColor,
-            }}
-            onPress={toggleTheme}>
-            <Icon name="theme-light-dark" size={20} color="#ffffff" />
-          </TouchableOpacity>
+          <Icon.Button
+            name="text"
+            color={theme.primaryColor}
+            title="Change To Shorts"
+            style={{backgroundColor: theme.surfaceBackgroundColor}}
+            size={25}
+            onPress={toInShorts}
+          />
         </View>
       </View>
     </View>
@@ -97,18 +92,6 @@ const styles = StyleSheet.create({
   },
   block: {
     flex: 1,
-    padding: 10,
     justifyContent: 'flex-end',
-  },
-  inShortBtn: {
-    height: 35,
-    width: 180,
-    borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inShortBtnTxt: {
-    fontSize: 12,
-    color: '#ffffff',
   },
 });

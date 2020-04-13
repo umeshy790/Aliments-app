@@ -13,6 +13,7 @@ const Article = ({result, goToArticle}) => {
         style={{
           ...styles.container,
           backgroundColor: theme.surfaceBackgroundColor,
+          borderColor: theme.borderColor,
         }}>
         <View style={styles.article}>
           {result.fields ? (
@@ -68,7 +69,7 @@ const Article = ({result, goToArticle}) => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    marginBottom: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   article: {
     flexDirection: 'row',

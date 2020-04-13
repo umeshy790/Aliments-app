@@ -36,7 +36,7 @@ const TopArticles = ({articles, goToArticle}) => {
   }
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <ScrollView
         ref={_scrollRef}
         horizontal={true}
@@ -98,11 +98,12 @@ const TopArticles = ({articles, goToArticle}) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 300,
+    flex: 1,
     width: Dimensions.get('window').width,
   },
   img: {
-    height: 300,
+    height: undefined,
+    flex: 1,
   },
   title: {
     position: 'absolute',

@@ -31,6 +31,7 @@ export const Theme = {
     backgroundColor: 'rgba(202, 223, 233, 0.12)',
     surfaceBackgroundColor: '#ffffff',
     barStyle: 'dark-content',
+    borderColor: '#dcdcdc',
   },
   darkTheme: {
     primaryColor: '#1da0f2',
@@ -40,8 +41,8 @@ export const Theme = {
     backgroundColor: '#121212',
     surfaceBackgroundColor: '#000000',
     barStyle: 'light-content',
+    borderColor: '#dcdcdc',
   },
 };
 
-// surfaceBackgroundColor: '#021923',
 export const ThemeContext = React.createContext(Theme.lightTheme);
